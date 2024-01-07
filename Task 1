@@ -1,0 +1,128 @@
+#Task 1a)
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def sigmoid(x):
+    """
+    Computes the sigmoid activation function.
+    Sigmoid(x) = 1 / (1 + exp(-x))
+    It maps the input 'x' to a value between 0 and 1, which is useful for binary classification.
+
+    Parameters:
+    x (numpy array): Input data
+
+    Returns:
+    numpy array: Output of sigmoid function
+    """
+    return 1 / (1 + np.exp(-x))
+
+def sigmoid_backward(x):
+    """
+    Computes the backward pass (gradient) of the sigmoid function.
+    The gradient of Sigmoid(x) is Sigmoid(x) * (1 - Sigmoid(x)).
+    Used in backpropagation to compute gradients.
+
+    Parameters:
+    x (numpy array): Input data
+
+    Returns:
+    numpy array: Gradient of sigmoid function
+    """
+    return sigmoid(x) * (1 - sigmoid(x))
+
+def relu(x):
+    """
+    Computes the ReLU (Rectified Linear Unit) activation function.
+    ReLU(x) = max(0, x)
+    Keeps positive values as is, and maps negative values to 0.
+    Used to introduce non-linearity in the network.
+
+    Parameters:
+    x (numpy array): Input data
+
+    Returns:
+    numpy array: Output of ReLU function
+    """
+    return np.maximum(0, x)
+
+def relu_backward(x):
+    """
+    Computes the backward pass (gradient) of the ReLU function.
+    The gradient of ReLU(x) is 1 for x > 0, and 0 otherwise.
+    Used in backpropagation to compute gradients.
+
+    Parameters:
+    x (numpy array): Input data
+
+    Returns:
+    numpy array: Gradient of ReLU function
+    """
+    return np.where(x > 0, 1, 0)
+
+# Test the functions with a sample input
+x = np.array([-4, -2, 0, 1, 2])
+
+sigmoid_output = sigmoid(x)
+sigmoid_backward_output = sigmoid_backward(x)
+relu_output = relu(x)
+relu_backward_output = relu_backward(x)
+
+# Display the outputs and gradients
+print("Sigmoid Output:", sigmoid_output)
+print("Sigmoid Gradient:", sigmoid_backward_output)
+print("ReLU Output:", relu_output)
+print("ReLU Gradient:", relu_backward_output)
+
+# Generating a range of values for plotting
+x_graph = np.linspace(-10, 10, 100)
+
+# Compute the outputs and gradients for the graph range
+sigmoid_graph = sigmoid(x_graph)
+sigmoid_backward_graph = sigmoid_backward(x_graph)
+relu_graph = relu(x_graph)
+relu_backward_graph = relu_backward(x_graph)
+
+# Plotting - Creating a figure with four subplots
+plt.figure(figsize=(12, 8))
+
+# Plotting Sigmoid Function
+plt.subplot(2, 2, 1)
+plt.plot(x_graph, sigmoid_graph, label="Sigmoid")
+plt.title("Sigmoid Function")
+plt.xlabel("x")
+plt.ylabel("Sigmoid(x)")
+plt.grid(True)
+plt.legend()
+
+# Plotting Sigmoid Gradient (Backward)
+plt.subplot(2, 2, 2)
+plt.plot(x_graph, sigmoid_backward_graph, label="Sigmoid Gradient", color="orange")
+plt.title("Sigmoid Gradient")
+plt.xlabel("x")
+plt.ylabel("Sigmoid' (x)")
+plt.grid(True)
+plt.legend()
+
+# Plotting ReLU Function
+plt.subplot(2, 2, 3)
+plt.plot(x_graph, relu_graph, label="ReLU", color="green")
+plt.title("ReLU Function")
+plt.xlabel("x")
+plt.ylabel("ReLU(x)")
+plt.grid(True)
+plt.legend()
+
+# Plotting ReLU Gradient (Backward)
+plt.subplot(2, 2, 4)
+plt.plot(x_graph, relu_backward_graph, label="ReLU Gradient", color="red")
+plt.title("ReLU Gradient")
+plt.xlabel("x")
+plt.ylabel("ReLU' (x)")
+plt.grid(True)
+plt.legend()
+
+# Adjust layout and show the plot
+plt.tight_layout()
+plt.show()
+
